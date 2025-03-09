@@ -132,15 +132,6 @@ if not hour_df.empty:
     ax.set_ylabel("Jumlah Penyewaan")
     st.pyplot(fig)
 
-st.subheader("Jumlah Penyewaan Berdasarkan Musim")
-if not day_df.empty:
-    season_count = day_df.groupby('season')['total_rentals'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(10, 5))
-    sns.barplot(x='season', y='total_rentals', data=season_count, ax=ax, palette='viridis')
-    ax.set_xlabel("Musim")
-    ax.set_ylabel("Jumlah Penyewaan")
-    st.pyplot(fig)
-
 # Menampilkan pertanyaan
 st.subheader("📌 Bagaimana tren jumlah penyewaan sepeda berdasarkan hari kerja dan akhir pekan?")
 st.markdown("Tren penyewaan sepeda berdasarkan tipe hari (Weekday vs. Weekend) dapat memberikan wawasan apakah orang lebih sering menyewa sepeda pada hari kerja atau akhir pekan.")
