@@ -6,14 +6,18 @@
 
 ### 1. Install the requirements
 
-`````bash
+```bash
 pip install -r requirements.txt
+```
 
 ### 2. Run The App
+
 ```bash
 streamlit run main.py
+```
 
-### 3. Link Streamlit Cloud  (Deploy)
-````bash
+### 3. Link Streamlit Cloud (Deploy)
+
+```bash
 https://bikesharingdatasetdataanalysis-8zbhqcwtnwembbc7znqeeg.streamlit.app/
-`````
+```
