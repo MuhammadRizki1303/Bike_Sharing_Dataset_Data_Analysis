@@ -18,7 +18,7 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     # Pastikan path dataset benar
-    base_path = "Bike Sharing Dataset"
+    base_path = "Dashboard"
     day_df = pd.read_csv(os.path.join(base_path, "day.csv"))
     hour_df = pd.read_csv(os.path.join(base_path, "hour.csv"))
     
