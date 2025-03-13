@@ -13,7 +13,7 @@ pip install -r requirements.txt
 ### 2. Run The App
 
 ```bash
-streamlit run main.py
+streamlit run Dashboard/dashboard.py
 ```
 
 ### 3. Link Streamlit Cloud (Deploy)
