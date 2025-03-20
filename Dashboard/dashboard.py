@@ -9,10 +9,17 @@ import os
 
 # Konfigurasi halaman
 st.set_page_config(
-    page_title="Bike Sharing Dashboard",
+    page_title="Bike Sharing Dashboard by Muhammad Rizki MC-55",
     page_icon="🚲",
     layout="wide"
 )
+
+# Sambutan
+st.title("Selamat Datang di Dashboard Muhammad Rizki dari MC-55")
+st.markdown("""
+    **Dashboard Penyewaan Sepeda** ini dirancang untuk menganalisis pola penyewaan sepeda berdasarkan berbagai faktor seperti waktu, musim, cuaca, dan kondisi lingkungan. 
+    Mari eksplorasi data bersama-sama!
+""")
 
 # Fungsi untuk memuat dan mempersiapkan data
 @st.cache_data
@@ -73,11 +80,11 @@ def load_data():
     # Menentukan kategori kelembaban
     def categorize_humidity(hum):
         if hum < 45:
-            return "Kering"
+            return "Dry"
         elif hum < 65:
             return "Ideal"
         else:
-            return "Lembab"
+            return "Humid"
     
     for df in [day_df, hour_df]:
         df["humidity_category"] = df["humidity"].apply(categorize_humidity)
@@ -87,11 +94,8 @@ def load_data():
 # Memuat data
 day_df, hour_df = load_data()
 
-# Tampilan Dashboard
-st.title("🚲 Dashboard Penyewaan Sepeda")
-st.markdown("Analisis data penyewaan sepeda berdasarkan berbagai faktor.")
-
 # Sidebar untuk filter
+st.sidebar.title("🔍 Filter Data")
 tahun = st.sidebar.selectbox("Pilih Tahun", ['Semua', '2011', '2012'])
 if tahun != 'Semua':
     day_df = day_df[day_df['year'] == tahun]
@@ -108,6 +112,7 @@ if tipe_hari != 'Semua':
     hour_df = hour_df[hour_df['day_category'] == tipe_hari]
 
 # Menampilkan metrik
+st.header("📊 Metrik Utama")
 col1, col2, col3 = st.columns([1, 1, 1])
 
 with col1:
@@ -122,21 +127,13 @@ with col3:
         st.metric("Penyewaan Tertinggi", f"{int(max_day['total_rentals']):,}", 
                   f"{max_day['dteday'].strftime('%d %b %Y')}")
 
-# Visualisasi
-st.subheader("Jumlah Penyewaan Berdasarkan Jam")
-if not hour_df.empty:
-    hourly_count = hour_df.groupby('hour')['total_rentals'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(10, 5))
-    sns.barplot(x='hour', y='total_rentals', data=hourly_count, ax=ax, palette='viridis')
-    ax.set_xlabel("Jam")
-    ax.set_ylabel("Jumlah Penyewaan")
-    st.pyplot(fig)
+# Analisis 1: Penyewaan Berdasarkan Tipe Hari
+st.header("📈 Analisis Data Penyewaan Sepeda")
+st.subheader("1. Bagaimana perbandingan penyewaan sepeda antara hari kerja dan akhir pekan?")
+st.markdown("""
+    Pertanyaan ini bertujuan untuk membandingkan pola penyewaan sepeda pada hari kerja (Weekday) dan akhir pekan (Weekend).
+""")
 
-# Menampilkan pertanyaan
-st.subheader("📌 Bagaimana tren jumlah penyewaan sepeda berdasarkan hari kerja dan akhir pekan?")
-st.markdown("Tren penyewaan sepeda berdasarkan tipe hari (Weekday vs. Weekend) dapat memberikan wawasan apakah orang lebih sering menyewa sepeda pada hari kerja atau akhir pekan.")
-
-# Visualisasi Penyewaan Berdasarkan Tipe Hari
 day_category_count = day_df.groupby("day_category")["total_rentals"].sum().reset_index()
 
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -146,27 +143,49 @@ ax.set_ylabel("Total Penyewaan")
 ax.set_title("Penyewaan Sepeda Berdasarkan Hari Kerja dan Akhir Pekan")
 st.pyplot(fig)
 
-# Menampilkan kesimpulan
+# Kesimpulan
 weekday_rentals = day_category_count[day_category_count["day_category"] == "Weekday"]["total_rentals"].values[0]
 weekend_rentals = day_category_count[day_category_count["day_category"] == "Weekend"]["total_rentals"].values[0]
 
 if weekday_rentals > weekend_rentals:
-    st.markdown(f"✅ **Hasil:** Jumlah penyewaan sepeda lebih tinggi pada **hari kerja ({weekday_rentals:,})** dibandingkan akhir pekan ({weekend_rentals:,}).")
+    st.markdown(f"""
+        ✅ **Kesimpulan:** 
+        - Penyewaan sepeda lebih tinggi pada **hari kerja ({weekday_rentals:,})** dibandingkan akhir pekan ({weekend_rentals:,}).
+        - Hal ini menunjukkan bahwa sepeda banyak digunakan untuk keperluan transportasi sehari-hari seperti pergi ke kantor atau sekolah.
+    """)
 else:
-    st.markdown(f"✅ **Hasil:** Jumlah penyewaan sepeda lebih tinggi pada **akhir pekan ({weekend_rentals:,})** dibandingkan hari kerja ({weekday_rentals:,}).")
+    st.markdown(f"""
+        ✅ **Kesimpulan:** 
+        - Penyewaan sepeda lebih tinggi pada **akhir pekan ({weekend_rentals:,})** dibandingkan hari kerja ({weekday_rentals:,}).
+        - Hal ini menunjukkan bahwa sepeda lebih sering digunakan untuk aktivitas rekreasi atau bersantai di akhir pekan.
+    """)
 
-# Menampilkan pertanyaan
-st.subheader("📌 Bagaimana pengaruh suhu terhadap jumlah penyewaan sepeda?")
-st.markdown("Suhu udara dapat mempengaruhi keputusan seseorang untuk menyewa sepeda. Grafik berikut menunjukkan hubungan antara suhu dan jumlah penyewaan.")
+# Analisis 2: Pengaruh Suhu terhadap Penyewaan
+st.subheader("2. Bagaimana pengaruh suhu terhadap jumlah penyewaan sepeda?")
+st.markdown("""
+    Pertanyaan ini bertujuan untuk memahami apakah suhu udara memengaruhi keputusan seseorang untuk menyewa sepeda.
+""")
 
-# Scatter plot suhu vs penyewaan
 fig, ax = plt.subplots(figsize=(8, 5))
-sns.scatterplot(x=day_df["temp"], y=day_df["total_rentals"], alpha=0.6, ax=ax)
+sns.scatterplot(x=day_df["temp"], y=day_df["total_rentals"], alpha=0.6, ax=ax, color='green')
 ax.set_xlabel("Suhu (Normalized)")
 ax.set_ylabel("Total Penyewaan")
 ax.set_title("Pengaruh Suhu terhadap Penyewaan Sepeda")
 st.pyplot(fig)
 
-# Menampilkan kesimpulan
-st.markdown("✅ **Hasil:** Dari grafik terlihat bahwa semakin tinggi suhu, jumlah penyewaan cenderung meningkat. Hal ini menunjukkan bahwa orang lebih sering menyewa sepeda saat cuaca lebih hangat.")
+# Kesimpulan
+correlation = day_df["temp"].corr(day_df["total_rentals"])
+st.markdown(f"""
+    ✅ **Kesimpulan:** 
+    - Terdapat korelasi positif antara suhu dan jumlah penyewaan sepeda (koefisien korelasi: **{correlation:.2f}**).
+    - Semakin tinggi suhu, semakin banyak orang yang menyewa sepeda. Hal ini menunjukkan bahwa cuaca yang hangat mendorong orang untuk bersepeda.
+""")
 
+# Footer
+st.markdown("---")
+st.markdown("""
+    <div style="text-align: center; padding: 10px;">
+        <p>Dibuat dengan ❤️ oleh <strong>Muhammad Rizki MC-55</strong></p>
+        <p>© 2023 - Dashboard Penyewaan Sepeda</p>
+    </div>
+""", unsafe_allow_html=True)
