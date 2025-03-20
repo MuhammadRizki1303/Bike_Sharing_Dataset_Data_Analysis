@@ -20,5 +20,5 @@ streamlit run Dashboard/dashboard.py
 ### 3. Link Streamlit Cloud (Deploy)
 
 ```bash
-https://bikesharingdatasetdataanalysis-qsh8n8s3fc3y8qosxg97fw.streamlit.app/
+https://bikesharingdatasetdataanalysis-86a8vtkx3j9hxyuy6rxqjw.streamlit.app/
 ```

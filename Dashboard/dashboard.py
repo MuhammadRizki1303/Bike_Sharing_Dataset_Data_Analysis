@@ -185,7 +185,7 @@ st.markdown(f"""
 st.markdown("---")
 st.markdown("""
     <div style="text-align: center; padding: 10px;">
-        <p>Dibuat dengan ❤️ oleh <strong>Muhammad Rizki MC-55</strong></p>
+        <p>Dibuat oleh <strong>Muhammad Rizki MC-55</strong></p>
         <p>© 2023 - Dashboard Penyewaan Sepeda</p>
     </div>
 """, unsafe_allow_html=True)

@@ -1,2 +1,2 @@
 link github : https://github.com/MuhammadRizki1303/Bike_Sharing_Dataset_Data_Analysis
-link deploy : https://bikesharingdatasetdataanalysis-qsh8n8s3fc3y8qosxg97fw.streamlit.app/
+link deploy : https://bikesharingdatasetdataanalysis-86a8vtkx3j9hxyuy6rxqjw.streamlit.app/
