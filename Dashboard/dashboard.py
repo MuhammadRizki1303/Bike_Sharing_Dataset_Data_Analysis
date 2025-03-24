@@ -137,7 +137,7 @@ st.markdown("""
 day_category_count = day_df.groupby("day_category")["total_rentals"].sum().reset_index()
 
 fig, ax = plt.subplots(figsize=(8, 5))
-sns.barplot(x="day_category", y="total_rentals", data=day_category_count, ax=ax, palette="coolwarm")
+sns.barplot(x="day_category", y="total_rentals", data=day_category_count, ax=ax, palette=["blue"])
 ax.set_xlabel("Kategori Hari")
 ax.set_ylabel("Total Penyewaan")
 ax.set_title("Penyewaan Sepeda Berdasarkan Hari Kerja dan Akhir Pekan")
@@ -167,7 +167,7 @@ st.markdown("""
 """)
 
 fig, ax = plt.subplots(figsize=(8, 5))
-sns.scatterplot(x=day_df["temp"], y=day_df["total_rentals"], alpha=0.6, ax=ax, color='green')
+sns.scatterplot(x=day_df["temp"], y=day_df["total_rentals"], alpha=0.6, ax=ax, color='blue')
 ax.set_xlabel("Suhu (Normalized)")
 ax.set_ylabel("Total Penyewaan")
 ax.set_title("Pengaruh Suhu terhadap Penyewaan Sepeda")

@@ -64,3 +64,5 @@ Berikut adalah dashboard dari analisis data penyewaan sepeda:
 ![Hasil 3](Hasil_Dashboard/Hasil_3.png)
 
 ![Hasil 4](Hasil_Dashboard/Hasil_4.png)
+
+![Hasil 5](Hasil_Dashboard/Hasil_5.png)
