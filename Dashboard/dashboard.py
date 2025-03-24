@@ -173,6 +173,7 @@ ax.set_ylabel("Total Penyewaan")
 ax.set_title("Pengaruh Suhu terhadap Penyewaan Sepeda")
 st.pyplot(fig)
 
+
 # Kesimpulan
 correlation = day_df["temp"].corr(day_df["total_rentals"])
 st.markdown(f"""
